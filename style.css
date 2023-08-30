@@ -15,7 +15,7 @@ body {
   font-size: 1rem;
   line-height: 1.5;
   letter-spacing: 0.00938em;
-  background-color: #202020;
+  background: rgb(5, 6, 45);
 }
 
 header {
@@ -137,11 +137,19 @@ main div {
 .currency-dropdown .currency-list.active {
   display: block;
 }
-
+.imgHeaderContainer {
+  display: flex;
+  align-self: center;
+  justify-content: space-evenly;
+}
 .imgHeader {
-  width: 100%;
+  width: auto;
   height: 50vh;
   background-color: aqua;
+  border-radius: 20px;
+  padding: 5px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
 }
 .recommended ul {
   display: flex;
@@ -149,59 +157,42 @@ main div {
   justify-content: space-evenly;
 }
 .recommended ul a {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
   color: #fefefe;
   padding: 10px 25px;
+  background: rgb(5, 6, 45);
+  border-radius: 17px;
+  width: 100%;
+  height: 100%;
 }
+.recommended ul li {
+  width: 190px;
+  height: 254px;
+  border-radius: 20px;
+  padding: 5px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+}
+.viewstore {
+  background-color: #00ddeb;
+}
+
 .featured-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
   gap: 20px; /* Gap between grid items */
 }
-
 .featured-item {
   width: auto;
   height: auto;
   color: #11101b;
-  background-color: #f0f0f0;
-  padding: 20px;
-  border: 1px solid #ccc;
-}
-
-.container {
-  flex: 1;
-  padding: 8px;
-}
-
-.container-root {
-  width: 100%;
-  margin-left: auto;
-  box-sizing: border-box;
-  margin-right: auto;
-  display: block;
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
-.container-root p {
-  /* padding-top: 10px; */
-  display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-}
-
-.container ul p {
-  display: list-item;
-}
-
-.container-root ul li {
-  text-align: -webkit-match-parent;
-}
-
-.container-root ul {
-  list-style-type: circle;
+  border-radius: 20px;
+  padding: 5px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
 }
 
 .footer {
@@ -228,53 +219,106 @@ main div {
   text-decoration: underline;
 }
 
-/* STORIES PAGE */
-.subtext {
-  font-size: smaller;
-  height: 2.6rem;
-  width: 90vw;
-  overflow: hidden;
-}
-
-.storiesTitle {
-  padding-left: 0.6rem;
-  color: hsl(162, 77%, 40%);
-}
-.storiesTitle:hover {
-  opacity: 0.6;
-}
-
-.storiesContainer {
-  padding-top: 1rem;
-}
-
-/* Special  */
-
-.author {
-  color: #fefefe;
-  /* background-color: #11101b; */
-}
-
-.author:hover {
-  color: hsl(162, 77%, 40%);
-  /* , transparent 59% */
-}
-.specials {
+.login {
+  margin-top: 20vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
+  align-self: center;
+  justify-content: space-evenly;
+}
+/* Bordered form */
+form {
+  width: 20vw;
+  height: 100%;
+  border-radius: 20px;
+  padding: 5px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
 }
 
-.specialsText {
-  color: hsl(162, 77%, 40%);
-}
-.specialsText:hover {
-  opacity: 0.6;
+/* Full-width inputs */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  background: rgb(5, 6, 45);
+  box-sizing: border-box;
 }
 
-.authorStories {
-  padding-left: 1rem;
+/* Set a style for all buttons */
+button {
+  color: white;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+  padding: 2px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+}
+
+/* Add a hover effect for buttons */
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra style for the cancel button (red) */
+.cancelbtn {
+  width: auto;
+  padding: 2px;
+  background-color: #f44336;
+}
+
+/* Center the avatar image inside this container */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+/* Avatar image */
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+}
+.buttoncontainer {
+  padding: 10px 25px;
+  background: rgb(5, 6, 45);
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.logincontainer {
+  padding: 10px 25px;
+  background: rgb(5, 6, 45);
+  border-radius: 17px;
+  width: 100%;
+  height: 100%;
+}
+
+/* The "Forgot password" text */
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+    display: block;
+    float: none;
+  }
+  .cancelbtn {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 1320px) {

@@ -45,73 +45,47 @@
       </nav>
     </header>
     <main>
-      <div>
-        <a>Image Header (WIP)</a>
-        <img class="imgHeader" src=".." />
-      </div>
+      <div class="login">
+        <form action="action_page.php" method="post">
+          <div class="logincontainer">
+            <div class="imgcontainer">
+              <img src="img_avatar2.png" alt="Avatar" class="avatar" />
+            </div>
 
-      <div class="recommended">
-        <ul>
-          <li>
-            <a href="./ophiussa.html"
-              >Ophiussa Esports
-              <div>
-                [logo]
-                <div>View Store</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="./serene.html"
-              >Team Serene
-              <div>
-                [logo]
-                <div>View Store</div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="./alg.html"
-              >Astro Allegiance
-              <div>
-                [logo]
-                <div>View Store</div>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div>
-        Featured Products
-        <div class="featured-container">
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
+            <div class="container">
+              <label for="uname"><b>Email</b></label>
+              <input
+                type="text"
+                placeholder="Enter Email"
+                name="uname"
+                required
+              />
+
+              <label for="psw"><b>Password</b></label>
+              <input
+                type="password"
+                placeholder="Enter Password"
+                name="psw"
+                required
+              />
+
+              <button type="submit">
+                <div class="buttoncontainer">Login</div>
+              </button>
+              <label>
+                <input type="checkbox" checked="checked" name="remember" />
+                Remember me
+              </label>
+            </div>
+
+            <div class="container">
+              <button type="button" class="cancelbtn">
+                <div class="buttoncontainer">Cancel</div>
+              </button>
+              <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
           </div>
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
-          </div>
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
-          </div>
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
-          </div>
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
-          </div>
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
-          </div>
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
-          </div>
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
-          </div>
-          <div class="featured-item">
-            <a href="./featured.html">Featured [img]</a>
-          </div>
-        </div>
+        </form>
       </div>
     </main>
     <footer>

@@ -182,17 +182,26 @@ main div {
 
 .featured-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+  grid-template-columns: repeat(4, 1fr); /* 3 columns per row */
   gap: 20px; /* Gap between grid items */
 }
 .featured-item {
+  display: flex;
   width: auto;
   height: auto;
+  align-items: center;
+  justify-content: space-around;
   color: #11101b;
   border-radius: 20px;
   padding: 5px;
-  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+}
+.product-desc {
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  bottom: -75px;
 }
 
 .footer {

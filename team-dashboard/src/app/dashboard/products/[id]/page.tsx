@@ -56,11 +56,10 @@ async function getProduct(id: string) {
   }
 }
 
-export default async function ProductDetailPage({
-  params,
-}: {
+export default async function ProductDetailPage(props: {
   params: { id: string };
 }) {
+  const params = await props.params;
   const product = await getProduct(params.id);
 
   if (!product) {

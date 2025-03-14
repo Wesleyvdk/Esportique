@@ -29,7 +29,7 @@ export function NotificationSystem() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [open, setOpen] = useState(false);
-  const { team } = useAuth();
+  const { teamData } = useAuth();
 
   // Simulate fetching notifications
   useEffect(() => {

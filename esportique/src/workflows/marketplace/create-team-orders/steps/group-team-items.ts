@@ -16,25 +16,27 @@ const groupTeamItemsStep = createStep(
 
         const teamsItems: Record<string, CartLineItemDTO[]> = {}
 
-        await Promise.all(cart.items?.map(async (item) => {
-            const { data: [product] } = await query.graph({
-                entity: "product",
-                fields: ["team.*"],
-                filters: {
-                    id: [item.product_id]
+        if (cart.items) {
+            await Promise.all(cart.items.map(async (item) => {
+                const { data: [product] } = await query.graph({
+                    entity: "product",
+                    fields: ["team.*"],
+                    filters: {
+                        id: [item.product_id]
+                    }
+                })
+
+                const teamId = product.team?.id
+
+                if (!teamId) {
+                    return
                 }
-            })
-
-            const teamId = product.team?.id
-
-            if (!teamId) {
-                return
-            }
-            teamsItems[teamId] = [
-                ...(teamsItems[teamId] || []),
-                item
-            ]
-        }))
+                teamsItems[teamId] = [
+                    ...(teamsItems[teamId] || []),
+                    item
+                ]
+            }))
+        }
 
         return new StepResponse({
             teamsItems

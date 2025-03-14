@@ -5,12 +5,18 @@ import {
     StepResponse
 } from "@medusajs/framework/workflows-sdk"
 import { Modules } from "@medusajs/framework/utils"
+import OnboardingModuleService from "../../../modules/onboarding/service"
+
+type WorkflowInput = {
+    user_id: string,
+    flow_id: string,
+}
 
 // Step to create a user onboarding record
 const createUserOnboardingStep = createStep(
     "create-user-onboarding",
-    async ({ user_id, flow_id }, { container }) => {
-        const onboardingModuleService = container.resolve("ONBOARDING_MODULE")
+    async ({ user_id, flow_id }: WorkflowInput, { container }) => {
+        const onboardingModuleService: OnboardingModuleService = container.resolve("ONBOARDING_MODULE")
 
         const userOnboarding = await onboardingModuleService.createUserOnboardings({
             user_id,
@@ -27,7 +33,7 @@ const createUserOnboardingStep = createStep(
         // Compensation function to roll back if needed
         if (!userOnboardingId) return
 
-        const onboardingModuleService = container.resolve("ONBOARDING_MODULE")
+        const onboardingModuleService: OnboardingModuleService = container.resolve("ONBOARDING_MODULE")
         await onboardingModuleService.deleteUserOnboardings([userOnboardingId])
     }
 )

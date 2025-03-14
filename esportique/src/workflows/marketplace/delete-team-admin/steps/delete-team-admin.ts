@@ -8,7 +8,7 @@ import { DeleteTeamAdminWorkflow } from ".."
 
 const deleteTeamAdminStep = createStep(
     "delete-team-admin-step",
-    async ({ id }: DeleteTeanmdminWorkflow, { container }) => {
+    async ({ id }: DeleteTeamAdminWorkflow, { container }) => {
         const marketplaceModuleService: MarketplaceModuleService =
             container.resolve(MARKETPLACE_MODULE)
 
@@ -25,9 +25,16 @@ const deleteTeamAdminStep = createStep(
         const marketplaceModuleService: MarketplaceModuleService =
             container.resolve(MARKETPLACE_MODULE)
 
-        const { team: _, ...teamAdminData } = teamAdmin
+        if (!teamAdmin) {
+            throw new Error("teamAdmin is undefined")
+        }
+        const { team: _, onboardings, ...teamAdminData } = teamAdmin
+        const teamAdminDataWithOnboardings = {
+            ...teamAdminData,
+            onboardings: onboardings.map(onboarding => onboarding.id)
+        }
 
-        marketplaceModuleService.createTeamAdmins(teamAdminData)
+        marketplaceModuleService.createTeamAdmins(teamAdminDataWithOnboardings)
     }
 )
 

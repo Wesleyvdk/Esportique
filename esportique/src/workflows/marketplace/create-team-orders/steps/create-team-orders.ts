@@ -155,7 +155,11 @@ const createTeamOrdersStep = createStep(
             created_orders: createdOrders
         })
     },
-    async ({ created_orders }, { container, context }) => {
+    async (result, { container, context }) => {
+        const { created_orders } = result || {};
+        if (!created_orders) {
+            return;
+        }
         await Promise.all(created_orders.map((createdOrder) => {
             return cancelOrderWorkflow(container).run({
                 input: {

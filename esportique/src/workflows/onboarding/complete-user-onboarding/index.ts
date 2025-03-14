@@ -3,21 +3,28 @@ import {
     WorkflowResponse,
     createStep,
     StepResponse,
-    useQueryGraphStep
 } from "@medusajs/framework/workflows-sdk"
+import {
+    useQueryGraphStep
+} from "@medusajs/medusa/core-flows"
+import OnboardingModuleService from "../../../modules/onboarding/service"
+type WorkflowInput = {
+    user_onboarding_id: string
+}
 
 // Step to mark the entire onboarding as completed
 const completeUserOnboardingStep = createStep(
     "complete-user-onboarding",
-    async ({ user_onboarding_id }, { container }) => {
-        const onboardingModuleService = container.resolve("ONBOARDING_MODULE")
+    async ({ user_onboarding_id }: WorkflowInput, { container }) => {
+        const onboardingModuleService: OnboardingModuleService = container.resolve("ONBOARDING_MODULE")
 
         // Get the current state for compensation
         const { data: userOnboardings } = useQueryGraphStep({
             entity: "user_onboarding",
             filters: {
                 id: user_onboarding_id
-            }
+            },
+            fields: []
         })
 
         if (userOnboardings.length === 0) {
@@ -40,7 +47,7 @@ const completeUserOnboardingStep = createStep(
         // Compensation function
         if (!previousState) return
 
-        const onboardingModuleService = container.resolve("ONBOARDING_MODULE")
+        const onboardingModuleService: OnboardingModuleService = container.resolve("ONBOARDING_MODULE")
         await onboardingModuleService.updateUserOnboardings(previousState)
     }
 )

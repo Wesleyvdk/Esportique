@@ -3,14 +3,21 @@ import {
     WorkflowResponse,
     createStep,
     StepResponse,
-    useQueryGraphStep
 } from "@medusajs/framework/workflows-sdk"
-
+import {
+    useQueryGraphStep
+} from "@medusajs/medusa/core-flows"
+import OnboardingModuleService from "../../../modules/onboarding/service"
+type WorkflowInput = {
+    user_onboarding_id: string;
+    step_id: string;
+    is_skipped?: boolean;
+}
 // Step to mark a user onboarding step as completed
 const completeUserOnboardingStepStep = createStep(
     "complete-user-onboarding-step",
-    async ({ user_onboarding_id, step_id, is_skipped = false }, { container }) => {
-        const onboardingModuleService = container.resolve("ONBOARDING_MODULE")
+    async ({ user_onboarding_id, step_id, is_skipped = false }: WorkflowInput, { container }) => {
+        const onboardingModuleService: OnboardingModuleService = container.resolve("ONBOARDING_MODULE")
 
         // Get or create the user onboarding step
         const { data: existingSteps } = useQueryGraphStep({
@@ -18,7 +25,8 @@ const completeUserOnboardingStepStep = createStep(
             filters: {
                 user_onboarding_id,
                 step_id
-            }
+            },
+            fields: []
         })
 
         let userOnboardingStep
@@ -33,9 +41,10 @@ const completeUserOnboardingStepStep = createStep(
                 time_spent_seconds: calculateTimeSpent(existingSteps[0])
             })
         } else {
+            const id = user_onboarding_id
             // Create new step
             userOnboardingStep = await onboardingModuleService.createUserOnboardingSteps({
-                user_onboarding_id,
+                id,
                 step_id,
                 is_completed: true,
                 is_skipped,
@@ -59,7 +68,7 @@ const completeUserOnboardingStepStep = createStep(
         // Compensation function
         if (!context) return
 
-        const onboardingModuleService = container.resolve("ONBOARDING_MODULE")
+        const onboardingModuleService: OnboardingModuleService = container.resolve("ONBOARDING_MODULE")
 
         if (context.previousState) {
             // Revert to previous state

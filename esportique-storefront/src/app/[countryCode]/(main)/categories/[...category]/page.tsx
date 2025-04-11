@@ -16,39 +16,54 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-  const product_categories = await listCategories()
+  try {
+    const product_categories = await listCategories()
 
-  if (!product_categories) {
+    if (!product_categories || product_categories.length === 0) {
+      return []
+    }
+
+    const countryCodes = await listRegions().then((regions: StoreRegion[]) =>
+      regions?.map((r) => r.countries?.map((c) => c.iso_2)).flat()
+    )
+
+    if (!countryCodes || countryCodes.length === 0) {
+      return []
+    }
+
+    const categoryHandles = product_categories.map(
+      (category: any) => category.handle
+    )
+
+    const staticParams = countryCodes
+      ?.map((countryCode: string | undefined) =>
+        categoryHandles.map((handle: any) => ({
+          countryCode,
+          category: [handle],
+        }))
+      )
+      .flat()
+
+    return staticParams || []
+  } catch (error) {
+    console.error("Error generating static params:", error)
     return []
   }
-
-  const countryCodes = await listRegions().then((regions: StoreRegion[]) =>
-    regions?.map((r) => r.countries?.map((c) => c.iso_2)).flat()
-  )
-
-  const categoryHandles = product_categories.map(
-    (category: any) => category.handle
-  )
-
-  const staticParams = countryCodes
-    ?.map((countryCode: string | undefined) =>
-      categoryHandles.map((handle: any) => ({
-        countryCode,
-        category: [handle],
-      }))
-    )
-    .flat()
-
-  return staticParams
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params
   try {
+    const params = await props.params
     const productCategory = await getCategoryByHandle(params.category)
 
-    const title = productCategory.name + " | Esportique"
+    if (!productCategory) {
+      return {
+        title: "Category Not Found | Esportique",
+        description: "The requested category could not be found.",
+      }
+    }
 
+    const title = productCategory.name + " | Esportique"
     const description = productCategory.description ?? `${title} category.`
 
     return {
@@ -59,27 +74,35 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       },
     }
   } catch (error) {
-    notFound()
+    return {
+      title: "Category Not Found | Esportique",
+      description: "The requested category could not be found.",
+    }
   }
 }
 
 export default async function CategoryPage(props: Props) {
-  const searchParams = await props.searchParams
-  const params = await props.params
-  const { sortBy, page } = searchParams
+  try {
+    const searchParams = await props.searchParams
+    const params = await props.params
+    const { sortBy, page } = searchParams
 
-  const productCategory = await getCategoryByHandle(params.category)
+    const productCategory = await getCategoryByHandle(params.category)
 
-  if (!productCategory) {
+    if (!productCategory) {
+      notFound()
+    }
+
+    return (
+      <CategoryTemplate
+        category={productCategory}
+        sortBy={sortBy}
+        page={page}
+        countryCode={params.countryCode}
+      />
+    )
+  } catch (error) {
+    console.error("Error rendering category page:", error)
     notFound()
   }
-
-  return (
-    <CategoryTemplate
-      category={productCategory}
-      sortBy={sortBy}
-      page={page}
-      countryCode={params.countryCode}
-    />
-  )
 }

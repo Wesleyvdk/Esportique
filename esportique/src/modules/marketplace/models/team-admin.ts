@@ -1,6 +1,5 @@
 import { model } from "@medusajs/framework/utils"
 import team from "./team"
-import OnboardingFlow from "../../onboarding/models/onboarding-flow"
 
 const TeamAdmin = model.define("team_admin", {
     id: model.id().primaryKey(),
@@ -10,7 +9,7 @@ const TeamAdmin = model.define("team_admin", {
     team: model.belongsTo(() => team, {
         mappedBy: "admins"
     }),
-    onboardings: model.hasMany(() => OnboardingFlow)
+    onboarding_flow_ids: model.json()
 })
 
 export default TeamAdmin

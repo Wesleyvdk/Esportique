@@ -16,7 +16,9 @@ const OnboardingStep = model.define("onboarding-step", {
     target_element: model.text().nullable(),
     placement: model.text().nullable(),
     route: model.text(),
-    userSteps: model.hasMany(() => UserOnboardingStep),
+    userSteps: model.hasMany(() => UserOnboardingStep, {
+        mappedBy: "step"
+    }),
 })
 
 export default OnboardingStep

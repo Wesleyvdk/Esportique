@@ -15,10 +15,10 @@ module.exports = defineConfig({
   },
   modules: [
     {
-      resolve: "./src/modules/marketplace",
+      resolve: "./src/modules/onboarding",
     },
     {
-      resolve: "./src/modules/onboarding",
+      resolve: "./src/modules/marketplace",
     },
     {
       resolve: "@medusajs/medusa/cache-redis",

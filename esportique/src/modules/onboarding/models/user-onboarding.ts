@@ -1,10 +1,10 @@
 import { model } from "@medusajs/framework/utils"
 import OnboardingFlow from "./onboarding-flow"
-import teamAdmin from "../../marketplace/models/team-admin"
+import UserOnboardingStep from "./user-onboarding-step"
 
 const UserOnboarding = model.define("user_onboarding", {
     id: model.id().primaryKey(),
-    user_id: model.id(),
+    user_id: model.text(),
     flow: model.belongsTo(() => OnboardingFlow, {
         mappedBy: "userOnboardings",
     }),
@@ -13,7 +13,9 @@ const UserOnboarding = model.define("user_onboarding", {
     completed_at: model.dateTime().nullable(),
     last_activity_at: model.dateTime(),
     current_step_index: model.number().default(0),
-    steps: model.hasMany(() => UserOnboarding),
+    steps: model.hasMany(() => UserOnboardingStep, {
+        mappedBy: "userOnboarding"
+    }),
 })
 
 export default UserOnboarding
